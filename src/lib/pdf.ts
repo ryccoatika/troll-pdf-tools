@@ -33,8 +33,8 @@ async function finish(out: PDFDocument) {
 }
 
 /**
- * "Compress": the page keeps its size, but the content gets crushed along one
- * axis by `percent`, anchored against the press base (bottom or left).
+ * "Compress": the whole page (paper and content) gets crushed along one axis
+ * by `percent`, exactly like it came out of the hydraulic press.
  */
 export async function compressPdf(file: File, percent: number, axis: Axis): Promise<ToolResult> {
   const { doc, size } = await load(file);
@@ -43,15 +43,13 @@ export async function compressPdf(file: File, percent: number, axis: Axis): Prom
   const pages = doc.getPages();
   const embedded = await out.embedPages(pages);
 
+  // PDF viewers reject pages smaller than 3pt, so a 100% squish still leaves a sliver
+  const MIN_PT = 3;
   pages.forEach((page, i) => {
     const { w, h } = box(page);
-    const target = out.addPage([w, h]);
-    target.drawPage(embedded[i], {
-      x: 0,
-      y: 0,
-      xScale: axis === "horizontal" ? factor : 1,
-      yScale: axis === "vertical" ? factor : 1,
-    });
+    const pw = axis === "horizontal" ? Math.max(MIN_PT, w * factor) : w;
+    const ph = axis === "vertical" ? Math.max(MIN_PT, h * factor) : h;
+    out.addPage([pw, ph]).drawPage(embedded[i], { x: 0, y: 0, width: pw, height: ph });
   });
 
   const bytes = await finish(out);

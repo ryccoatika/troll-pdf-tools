@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useApp, type Tool } from "@/lib/store";
 import { sfx } from "@/lib/sound";
-import { placeholderPage, renderPages } from "@/lib/render";
+import { onFrame, placeholderPage, renderPages } from "@/lib/render";
 import {
   compressPdf,
   makeSamplePdf,
@@ -166,7 +166,9 @@ export default function Workspace() {
         tool === "compress" ? compressPdf(files[0], percent, axis) : tool === "split" ? splitPdf(files[0], axis) : mergePdf(files);
       const beforeJob = files[0].arrayBuffer().then((b) => renderPages(b, { maxPages: 1, maxSize: 900 }));
       const [result, , [beforeCanvas]] = await Promise.all([job, animDone, beforeJob]);
-      const [afterCanvas] = await renderPages(result.bytes, { maxPages: 1, maxSize: 900 });
+      // same px-per-point as the "before" render, so the size change is visible
+      const [rawAfter] = await renderPages(result.bytes, { maxPages: 1, scale: Number(beforeCanvas.dataset.scale) });
+      const afterCanvas = tool === "merge" ? rawAfter : onFrame(rawAfter, beforeCanvas, tool === "compress" ? "bottom-left" : "top-left");
       setOutcome({
         tool,
         result,
@@ -174,7 +176,7 @@ export default function Workspace() {
         percent,
         fileCount: files.length,
         before: beforeCanvas.toDataURL("image/jpeg", 0.85),
-        after: afterCanvas.toDataURL("image/jpeg", 0.85),
+        after: afterCanvas.toDataURL("image/png"),
       });
       setStatus("done");
       sfx.success();

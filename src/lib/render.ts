@@ -16,7 +16,7 @@ function pdfjs() {
 /** Render pages of a PDF to canvases (white background), long side ~`maxSize` px. */
 export async function renderPages(
   data: ArrayBuffer | Uint8Array,
-  { maxPages = 1, maxSize = 1024 }: { maxPages?: number; maxSize?: number } = {},
+  { maxPages = 1, maxSize = 1024, scale: fixedScale }: { maxPages?: number; maxSize?: number; scale?: number } = {},
 ): Promise<HTMLCanvasElement[]> {
   const lib = await pdfjs();
   // pdf.js transfers the buffer to the worker, so hand it a copy
@@ -28,7 +28,7 @@ export async function renderPages(
   for (let i = 1; i <= n; i++) {
     const page = await doc.getPage(i);
     const base = page.getViewport({ scale: 1 });
-    const scale = maxSize / Math.max(base.width, base.height);
+    const scale = fixedScale ?? maxSize / Math.max(base.width, base.height);
     const viewport = page.getViewport({ scale });
     const canvas = document.createElement("canvas");
     canvas.width = Math.ceil(viewport.width);
@@ -37,10 +37,25 @@ export async function renderPages(
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+    canvas.dataset.scale = String(scale);
     out.push(canvas);
   }
   await task.destroy();
   return out;
+}
+
+/**
+ * Place `page` on a transparent canvas the size of `frame`, so before/after
+ * previews share one scale. Anchored like the output: bottom-left for compress,
+ * top-left for split.
+ */
+export function onFrame(page: HTMLCanvasElement, frame: HTMLCanvasElement, anchor: "bottom-left" | "top-left") {
+  const c = document.createElement("canvas");
+  c.width = Math.max(frame.width, page.width);
+  c.height = Math.max(frame.height, page.height);
+  const y = anchor === "bottom-left" ? c.height - page.height : 0;
+  c.getContext("2d")!.drawImage(page, 0, y);
+  return c;
 }
 
 /** A believable fake document used as the idle placeholder in the 3D stage. */

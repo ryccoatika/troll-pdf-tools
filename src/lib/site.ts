@@ -44,7 +44,7 @@ export const SITE = {
 };
 
 export const FAQ: [question: string, answer: string][] = [
-  ["Is my PDF actually compressed?", "Yes. Literally. Every page's content is physically squeezed by the percentage you choose. File size is a different department, and that department is closed."],
+  ["Is my PDF actually compressed?", "Yes. Literally. Every page, paper and content, is physically squeezed by the percentage you choose. File size is a different department, and that department is closed."],
   ["Why does my split PDF have twice as many pages?", "Because every page was split in half. You asked us to split it. We are a company of our word."],
   ["Merge put all my pages on one page.", "Correct. That's what merging means. Look it up."],
   ["Is the direction really random?", "Our proprietary AI decides between vertical and horizontal. The AI is Math.random(). It has never been wrong."],

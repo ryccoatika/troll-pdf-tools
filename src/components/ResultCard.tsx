@@ -14,7 +14,7 @@ export default function ResultCard({ outcome, onAgain, onFresh }: { outcome: Out
     tool === "compress" ? "Compressed. Literally." : tool === "split" ? "Split. Right down the middle." : "Merged. Into one page.";
   const story =
     tool === "compress"
-      ? `Every page's content was crushed ${percent}% ${axis === "vertical" ? "vertically" : "horizontally"}. Direction chosen by our AI (coin).`
+      ? `Every page was crushed ${percent}% ${axis === "vertical" ? "shorter" : "narrower"}, paper and all. Direction chosen by our AI (coin).`
       : tool === "split"
         ? `Every page was cut ${axis === "vertical" ? "down the middle, left | right" : "across the middle, top / bottom"}. ${result.pagesIn} page${result.pagesIn === 1 ? "" : "s"} in, ${result.pagesOut} half-pages out.`
         : `${result.pagesIn} pages from ${fileCount} files were fused onto a single page. Reading it is your problem now.`;
@@ -22,7 +22,7 @@ export default function ResultCard({ outcome, onAgain, onFresh }: { outcome: Out
   const stats: [string, string, string?][] =
     tool === "compress"
       ? [
-          ["Content compression", `${percent}%`, "text-amber"],
+          ["Page compression", `${percent}%`, "text-amber"],
           ["Direction", axis === "vertical" ? "Vertical ↕" : "Horizontal ↔"],
           ["Original size", formatBytes(result.inputSize)],
           [
@@ -77,9 +77,9 @@ export default function ResultCard({ outcome, onAgain, onFresh }: { outcome: Out
           ["Before", outcome.before],
           ["After", outcome.after],
         ].map(([label, src]) => (
-          <figure key={label} className="overflow-hidden rounded-xl border border-line bg-white">
+          <figure key={label} className="overflow-hidden rounded-xl border border-line bg-black/30">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt={`${label} preview`} className="aspect-[3/4] w-full object-contain" />
+            <img src={src} alt={`${label} preview`} className="aspect-[3/4] w-full object-contain p-2 drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]" />
             <figcaption className="bg-panel px-2 py-1 text-center font-mono text-[10px] uppercase tracking-widest text-muted">{label}</figcaption>
           </figure>
         ))}

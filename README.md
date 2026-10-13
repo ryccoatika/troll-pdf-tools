@@ -27,7 +27,7 @@ A beautifully over-engineered **troll PDF toolkit**. It looks like a premium Saa
 
 | Tool | What you expect | What you get |
 | --- | --- | --- |
-| 🗜️ **Compress** | A smaller file | A 40-ton 3D hydraulic press crushes your PDF. Every page's _content_ is squeezed by the percentage you choose, vertically or horizontally (picked by our "AI", which is a coin). |
+| 🗜️ **Compress** | A smaller file | A 40-ton 3D hydraulic press crushes your PDF. Every page, paper and content, is squeezed by the percentage you choose, vertically or horizontally (picked by our "AI", which is a coin). |
 | ✂️ **Split** | Pages separated into files | A precision laser cuts **every page in half**. Down the middle or across it. 3 pages in, 6 half-pages out. |
 | 🌀 **Merge** | Files joined end to end | A 9,000 RPM vortex fuses **every page of every file onto a single page**. Efficient. Unreadable. |
 
@@ -149,7 +149,7 @@ src/
     └── site.ts              # SEO config + FAQ copy
 ```
 
-- **Compress**: each page is embedded and redrawn on a same-size page with `yScale` (or `xScale`) = `1 - percent`, anchored to the press bed.
+- **Compress**: each page is embedded and redrawn on a page whose height (or width) is `1 - percent` of the original, so paper and content are crushed together like they left the press.
 - **Split**: each page is embedded twice with a half-page bounding box, producing two half-size pages.
 - **Merge**: every page from every file is drawn onto one page with reduced opacity and a little random rotation.
 
