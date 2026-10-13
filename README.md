@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+<img src="docs/screenshots/banner.png" alt="literally.pdf: PDF tools that do exactly what they say" width="100%" />
 
-First, run the development server:
+# literally.pdf
+
+**PDF tools that do _exactly_ what they say.**
+
+Compress, split and merge PDFs with industrial-grade, physically accurate, extremely literal technology.
+
+![Next.js](https://img.shields.io/badge/Next.js-16-000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white)
+![Three.js](https://img.shields.io/badge/Three.js-r186-000?logo=threedotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?logo=tailwindcss&logoColor=white)
+![Runs in browser](https://img.shields.io/badge/uploads-zero-ffb020)
+
+</div>
+
+---
+
+## What is this?
+
+A beautifully over-engineered **troll PDF toolkit**. It looks like a premium SaaS PDF tool, and it is one. It just takes every request **literally**:
+
+| Tool | What you expect | What you get |
+| --- | --- | --- |
+| 🗜️ **Compress** | A smaller file | A 40-ton 3D hydraulic press crushes your PDF. Every page's _content_ is squeezed by the percentage you choose, vertically or horizontally (picked by our "AI", which is a coin). |
+| ✂️ **Split** | Pages separated into files | A precision laser cuts **every page in half**. Down the middle or across it. 3 pages in, 6 half-pages out. |
+| 🌀 **Merge** | Files joined end to end | A 9,000 RPM vortex fuses **every page of every file onto a single page**. Efficient. Unreadable. |
+
+The output is always a **real, valid PDF**. Text stays vector text; it's just... squished.
+
+<div align="center">
+  <img src="docs/screenshots/hero.png" alt="Landing page" width="100%" />
+</div>
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/compress.png" alt="Compress: vertical hydraulic press result" /></td>
+    <td width="50%"><img src="docs/screenshots/compress-horizontal.png" alt="Compress: horizontal press mid-crush" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Compress</b>: crushed 50%, vertically</td>
+    <td align="center"><b>Compress</b>: when the coin says horizontal</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/split.png" alt="Split: page laser-cut in half" /></td>
+    <td width="50%"><img src="docs/screenshots/merge.png" alt="Merge: all pages fused into one" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Split</b>: halved, as promised</td>
+    <td align="center"><b>Merge</b>: 5 pages, 1 page, 20% readability</td>
+  </tr>
+</table>
+
+<div align="center">
+  <img src="docs/screenshots/pricing.png" alt="Fake pricing section" width="100%" />
+  <sub>Yes, there is a Pro plan. No, it does not take your card. The payment is declined <i>successfully</i>.</sub>
+</div>
+
+## Features
+
+- 🎬 **Real-time 3D scenes** for every tool (React Three Fiber): hydraulic press with flying paper scraps and camera shake, a laser cutter with sparks and bloom, a fusion vortex with a flash.
+- 📄 **Actual PDF processing** with `pdf-lib`: pages are embedded as vector XObjects and transformed, never rasterized.
+- 🖼️ **Your own pages in 3D**: the first page(s) are rendered with `pdf.js` and mapped onto the 3D paper.
+- 🔊 **Procedural sound effects**: hydraulic hiss, paper crunch, laser buzz, sad trombone. All synthesized with the Web Audio API, zero audio files.
+- 🔒 **100% client-side**: files never leave the browser. No server, no uploads, no accounts.
+- 💸 **Fake Pro plan**: 100% compression, "Split personality", "Un-merge" and other premium features that are definitely real.
+- 🔎 **SEO ready**: metadata, Open Graph / Twitter images, `robots.txt`, `sitemap.xml`, web manifest and JSON-LD (`WebApplication` + `FAQPage`).
+- 📱 **Responsive** down to phone width; respects `prefers-reduced-motion` for the decorative CSS animations.
+
+## Tech stack
+
+| Layer | Choice |
+| --- | --- |
+| Framework | [Next.js 16](https://nextjs.org) (App Router) + React 19 + TypeScript |
+| 3D | [three.js](https://threejs.org), [@react-three/fiber](https://r3f.docs.pmnd.rs), [@react-three/drei](https://drei.docs.pmnd.rs), [@react-three/postprocessing](https://github.com/pmndrs/react-postprocessing) |
+| PDF | [pdf-lib](https://pdf-lib.js.org) (write), [pdfjs-dist](https://mozilla.github.io/pdf.js/) (render) |
+| UI | Tailwind CSS v4, [Motion](https://motion.dev), Zustand |
+| Audio | Web Audio API (procedural) |
+
+## Getting started
+
+Requires **Node.js 20+**.
 
 ```bash
+git clone https://github.com/ryccoatika/troll-pdf-tools.git
+cd troll-pdf-tools
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) and start squishing. No PDF handy? Hit **"Use a sample"**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm start` | Serve the production build |
+| `npm run lint` | Lint with ESLint |
 
-## Learn More
+### Environment
 
-To learn more about Next.js, take a look at the following resources:
+Copy `.env.example` to `.env.local` and set your public URL. It's used for the canonical URL, sitemap, robots and social preview images.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How the trolling works
 
-## Deploy on Vercel
+```
+src/
+├── app/                     # layout, page, SEO metadata routes (robots, sitemap, OG image…)
+├── components/
+│   ├── three/
+│   │   ├── PressScene.tsx   # hydraulic press (rotates 90° for horizontal mode)
+│   │   ├── SplitScene.tsx   # laser cutter + halves parting ways
+│   │   ├── MergeScene.tsx   # page vortex → flash → fused stack
+│   │   ├── Stage.tsx        # canvas, lights, local environment, bloom
+│   │   └── shared.tsx       # camera rig, run clock, debris/sparks, easing
+│   ├── Workspace.tsx        # tool flow: upload → animate + process → result
+│   └── …                    # hero, pricing, FAQ, Pro modal, toast
+└── lib/
+    ├── pdf.ts               # compress / split / merge with pdf-lib
+    ├── render.ts            # pdf.js page rendering
+    ├── sound.ts             # Web Audio sound engine
+    └── site.ts              # SEO config + FAQ copy
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Compress**: each page is embedded and redrawn on a same-size page with `yScale` (or `xScale`) = `1 - percent`, anchored to the press bed.
+- **Split**: each page is embedded twice with a half-page bounding box, producing two half-size pages.
+- **Merge**: every page from every file is drawn onto one page with reduced opacity and a little random rotation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The 3D animation and the PDF job run in parallel; the result appears when both finish.
+
+## Disclaimer
+
+This is a joke project. Please don't use it on your tax return. Or do, we can't stop you. It runs in your browser.
+
+<div align="center">
+  <sub>No PDFs were harmed in the making of this project. Several were flattened.</sub>
+</div>
