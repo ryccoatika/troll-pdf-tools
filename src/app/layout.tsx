@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
-import { SITE, SITE_URL } from "@/lib/site";
+import { INDEXABLE, SITE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({ variable: "--font-display", subsets: ["latin"] });
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     description: SITE.description,
   },
   robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+    index: INDEXABLE,
+    follow: INDEXABLE,
+    googleBot: { index: INDEXABLE, follow: INDEXABLE, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   formatDetection: { telephone: false, email: false, address: false },
 };

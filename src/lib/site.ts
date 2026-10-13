@@ -1,6 +1,25 @@
 /** Single source of truth for SEO metadata, structured data and visible FAQ copy. */
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3311").replace(/\/$/, "");
+/**
+ * Public base URL. Explicit `NEXT_PUBLIC_SITE_URL` wins; on Vercel we fall back to
+ * the production domain (or the deployment URL for previews), then localhost.
+ */
+function resolveSiteUrl() {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  const vercelProd = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  const vercelDeploy = process.env.VERCEL_URL;
+  const url =
+    explicit ||
+    (process.env.VERCEL_ENV === "production" && vercelProd ? `https://${vercelProd}` : "") ||
+    (vercelDeploy ? `https://${vercelDeploy}` : "") ||
+    "http://localhost:3000";
+  return url.replace(/\/$/, "");
+}
+
+export const SITE_URL = resolveSiteUrl();
+
+/** Only the production deployment should be indexed; Vercel previews stay out of search. */
+export const INDEXABLE = !process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production";
 
 export const SITE = {
   name: "literally.pdf",

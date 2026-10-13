@@ -15,6 +15,8 @@ Compress, split and merge PDFs with industrial-grade, physically accurate, extre
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?logo=tailwindcss&logoColor=white)
 ![Runs in browser](https://img.shields.io/badge/uploads-zero-ffb020)
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fryccoatika%2Ftroll-pdf-tools&project-name=troll-pdf-tools&repository-name=troll-pdf-tools)
+
 </div>
 
 ---
@@ -106,11 +108,25 @@ Open [http://localhost:3000](http://localhost:3000) and start squishing. No PDF 
 
 ### Environment
 
-Copy `.env.example` to `.env.local` and set your public URL. It's used for the canonical URL, sitemap, robots and social preview images.
+| Variable | Required | Description |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | No | Public URL used for canonical links, sitemap, robots and social images. On Vercel it falls back to the production domain automatically, so you only need it for a custom domain. |
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+cp .env.example .env.local
 ```
+
+## Deploy on Vercel
+
+1. Click **Deploy with Vercel** above, or import the repo at [vercel.com/new](https://vercel.com/new). The Next.js preset needs no changes: build `next build`, install `npm install`, Node 20.9+.
+2. (Optional) Add a custom domain, then set `NEXT_PUBLIC_SITE_URL=https://your-domain.com` for the **Production** environment and redeploy.
+
+What's handled for you:
+
+- Production URL is detected from `VERCEL_PROJECT_PRODUCTION_URL`, so canonical tags, the sitemap and Open Graph images point to the right domain.
+- **Preview deployments are not indexed**: they serve `Disallow: /` in `robots.txt` and `noindex, nofollow` meta tags, so search engines only see production.
+- Everything else is static: the page, icons, OG images, `robots.txt` and `sitemap.xml` are prerendered at build time. No serverless functions or env secrets needed.
+- Security headers (`nosniff`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`) are set in `next.config.ts`.
 
 ## How the trolling works
 
